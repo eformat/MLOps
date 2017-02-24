@@ -5,6 +5,11 @@ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 sparkR.session.stop()
 sparkR.session(master = "spark://172.17.0.5:7077", appName="RStudio")
 
+# Local DataFrame Test
+df <- as.DataFrame(faithful)
+head(df)
+
+
 
 
 
