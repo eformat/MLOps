@@ -15,13 +15,36 @@
 # limitations under the License.
 #
 
+Sys.setenv(SPARK_HOME = "/home/spicozzi/spark-2.1.0")
+Sys.setenv(SPARK_MASTER = "local[*]")
+Sys.setenv(GIT_HOME = "/home/spicozzi/GitHub/MLOps")
+setwd(file.path(Sys.getenv("GIT_HOME"), "/samples"))
+getwd()
+
+# Remove outputs from previous attempt so can rerun
+dir <- file.path(Sys.getenv("GIT_HOME"), "samples/namesAndFavColors.parquet")
+unlink(dir, recursive = TRUE, force = TRUE)
+dir <- file.path(Sys.getenv("GIT_HOME"), "samples/namesAndAges.parquet")
+unlink(dir, recursive = TRUE, force = TRUE)
+dir <- file.path(Sys.getenv("GIT_HOME"), "samples/people.parquet")
+unlink(dir, recursive = TRUE, force = TRUE)
+library(RPostgreSQL)
+library("sqldf")
+drv <- dbDriver("PostgreSQL")
+con <- dbConnect(drv, dbname="dbserver", host="localhost", user="username", password="password")
+sqldf("DROP TABLE people", dbname = "dbserver", user = "username", password = "password")
+dbDisconnect(con)
+
 # library(SparkR)
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 
 # $example on:init_session$
-sparkR.session(appName = "R Spark SQL basic example", sparkConfig = list(spark.some.config.option = "some-value"))
-# $example off:init_session$
+  
+sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName = "R Spark SQL basic example", sparkConfig = list(spark.driver.extraClassPath="/home/spicozzi/GitHub/MLOps/samples/postgresql-9.4.1212.jar"))
 
+#, sparkConfig = list(spark.some.config.option = "some-value"))
+
+# $example off:init_session$
 
 # $example on:create_df$
 df <- read.json(file.path(Sys.getenv("SPARK_HOME"),"examples/src/main/resources/people.json"))
@@ -212,12 +235,11 @@ head(results)
 
 # $example on:jdbc_dataset$
 # Loading data from a JDBC source
-require("RPostgreSQL")
-require("RJDBC")
-df <- read.jdbc("jdbc:postgresql:dbserver", "schema.tablename", user = "username", password = "password")
+# df <- read.jdbc("jdbc:postgresql:dbserver", "people", user = "username", password = "password")
 
 # Saving data to a JDBC source
-write.jdbc(df, "jdbc:postgresql:dbserver", "schema.tablename", user = "username", password = "password")
+# Drop table before running this
+write.jdbc(df, "jdbc:postgresql:dbserver", "people", user = "username", password = "password")
 # $example off:jdbc_dataset$
 
 # Stop the SparkSession now

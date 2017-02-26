@@ -22,22 +22,29 @@
 # To run this example use
 # ./bin/spark-submit examples/src/main/r/data-manipulation.R <path_to_csv>
 
+Sys.setenv(SPARK_HOME = "/home/spicozzi/spark-2.1.0")
+Sys.setenv(SPARK_MASTER = "local[*]")
+Sys.setenv(GIT_HOME = "/home/spicozzi/GitHub/MLOps")
+setwd(file.path(Sys.getenv("GIT_HOME"), "/samples"))
+getwd()
+
 # Load SparkR library into your R session
 # library(SparkR)
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 
-args <- commandArgs(trailing = TRUE)
-
-if (length(args) != 1) {
-  print("Usage: data-manipulation.R <path-to-flights.csv>")
-  print("The data can be downloaded from: http://s3-us-west-2.amazonaws.com/sparkr-data/flights.csv")
-  q("no")
-}
+# args <- commandArgs(trailing = TRUE)
+# if (length(args) < 1 ) {
+#   print("Usage: data-manipulation.R <path-to-flights.csv>")
+#   print("The data can be downloaded from: http://s3-us-west-2.amazonaws.com/sparkr-data/flights.csv")
+#   q("no")
+# }
 
 ## Initialize SparkSession
-sparkR.session(appName = "SparkR-data-manipulation-example", sparkConfig = list(spark.driver.memory = "4g"))
+sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName = "SparkR-data-manipulation-example", sparkConfig = list(spark.driver.memory = "4g"))
 
-flightsCsvPath <- args[[1]]
+# flightsCsvPath <- args[[1]]
+flightsCsvPath <- "http://s3-us-west-2.amazonaws.com/sparkr-data/flights.csv"
+flightsCsvPathlocal <- file.path(Sys.getenv("GIT_HOME"), "/samples/flights.csv")
 
 # Create a local R dataframe
 flights_df <- read.csv(flightsCsvPath, header = TRUE)
@@ -53,7 +60,8 @@ SFO_DF <- createDataFrame(SFO_df)
 head(SFO_DF)
 
 #  Directly create a SparkDataFrame from the source data
-flightsDF <- read.df(flightsCsvPath, source = "csv", header = "true")
+# flightsDF <- read.df(flightsCsvPath, source = "csv", header = "true")
+flightsDF <- read.df(flightsCsvPathlocal, source = "csv", header = "true")
 head(flightsDF)
 
 # Print the schema of this SparkDataFrame
@@ -74,11 +82,13 @@ count(flightsDF)
 
 # Select specific columns
 destDF <- select(flightsDF, "dest", "cancelled")
+head(destDF)
 
 # Using SQL to select columns of data
 # First, register the flights SparkDataFrame as a table
 createOrReplaceTempView(flightsDF, "flightsTable")
 destDF <- sql("SELECT dest, cancelled FROM flightsTable")
+head(destDF)
 
 # Use collect to create a local R data frame
 local_df <- collect(destDF)

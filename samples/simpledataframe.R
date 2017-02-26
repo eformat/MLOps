@@ -1,0 +1,21 @@
+
+Sys.setenv(SPARK_HOME = "/home/spicozzi/spark-2.1.0")
+Sys.setenv(SPARK_MASTER = "local[*]")
+Sys.setenv(GIT_HOME = "/home/spicozzi/GitHub/MLOps")
+setwd(file.path(Sys.getenv("GIT_HOME"), "/samples"))
+getwd()
+
+library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
+sparkR.session.stop()
+sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName="RStudio Simple Spark DF")
+
+# Local DataFrame Test
+df <- as.DataFrame(faithful)
+head(df)
+
+sparkR.session.stop()
+
+
+
+
+
