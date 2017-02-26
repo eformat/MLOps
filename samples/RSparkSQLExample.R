@@ -15,9 +15,10 @@
 # limitations under the License.
 #
 
-Sys.setenv(SPARK_HOME = "/home/spicozzi/spark-2.1.0")
+Sys.setenv(SPARK_HOME = "/home/guest/spark-2.1.0")
 Sys.setenv(SPARK_MASTER = "local[*]")
-Sys.setenv(GIT_HOME = "/home/spicozzi/GitHub/MLOps")
+Sys.setenv(GIT_HOME = "/home/guest/MLOps")
+Sys.setenv(DB_HOST = "172.30.93.75")
 setwd(file.path(Sys.getenv("GIT_HOME"), "/samples"))
 getwd()
 
@@ -31,8 +32,8 @@ unlink(dir, recursive = TRUE, force = TRUE)
 library(RPostgreSQL)
 library("sqldf")
 drv <- dbDriver("PostgreSQL")
-con <- dbConnect(drv, dbname="dbserver", host="localhost", user="username", password="password")
-sqldf("DROP TABLE people", dbname = "dbserver", user = "username", password = "password")
+con <- dbConnect(drv, dbname="dbserver", host="172.30.93.75", port = 5432, user="username", password="password")
+sqldf("DROP TABLE people", host="172.30.93.75", dbname = "dbserver", user = "username", password = "password")
 dbDisconnect(con)
 
 # library(SparkR)
@@ -40,7 +41,8 @@ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 
 # $example on:init_session$
   
-sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName = "R Spark SQL basic example", sparkConfig = list(spark.driver.extraClassPath="/home/spicozzi/GitHub/MLOps/samples/postgresql-9.4.1212.jar"))
+sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName = "R Spark SQL basic example", 
+   sparkConfig = list(spark.driver.extraClassPath = file.path(Sys.getenv("GIT_HOME"), "samples/postgresql-9.4.1212.jar")))
 
 #, sparkConfig = list(spark.some.config.option = "some-value"))
 
@@ -136,8 +138,8 @@ write.df(namesAndAges, "namesAndAges.parquet", "parquet")
 
 # $example on:direct_sql$
 pfile <- file.path(Sys.getenv('SPARK_HOME'),'examples/src/main/resources/users.parquet')
-df <- sql("SELECT * FROM parquet.`/home/spicozzi/spark-2.1.0/examples/src/main/resources/users.parquet`")
-#df <- sql("SELECT * FROM parquet.`pfile`")
+df <- sql("SELECT * FROM parquet.`/home/guest/spark-2.1.0/examples/src/main/resources/users.parquet`")
+# df <- sql("SELECT * FROM parquet.`pfile`")
 # $example off:direct_sql$
 
 
@@ -224,7 +226,7 @@ sparkR.session(enableHiveSupport = TRUE)
 sql("CREATE TABLE IF NOT EXISTS src (key INT, value STRING)")
 kv1file <- file.path(Sys.getenv('HOME_SPARK'), 'examples/src/main/resources/kv1.txt') 
 # sql("LOAD DATA LOCAL INPATH file.path(Sys.getenv('SPARK_HOME'),'examples/src/main/resources/kv1.txt') INTO TABLE src")
-sql("LOAD DATA LOCAL INPATH '/home/spicozzi/spark-2.1.0/examples/src/main/resources/kv1.txt' INTO TABLE src")
+sql("LOAD DATA LOCAL INPATH '/home/guest/spark-2.1.0/examples/src/main/resources/kv1.txt' INTO TABLE src")
 # sql("LOAD DATA LOCAL INPATH `kv1file`) INTO TABLE src")
 
 # Queries can be expressed in HiveQL.
@@ -232,15 +234,16 @@ results <- collect(sql("FROM src SELECT key, value"))
 head(results)
 # $example off:spark_hive$
 
+# Saving data to a JDBC source
+# write.jdbc(df, "jdbc:postgresql:dbserver", "people", host="172.30.93.75", port = 5432, user = "username", password = "password")
+dbConString <- paste("jdbc:postgresql://", Sys.getenv("DB_HOST"), ":5432/dbserver", sep="")
+write.jdbc(df, dbConString, "people", user = "username", password = "password")
+# $example off:jdbc_dataset$
 
 # $example on:jdbc_dataset$
 # Loading data from a JDBC source
-# df <- read.jdbc("jdbc:postgresql:dbserver", "people", user = "username", password = "password")
-
-# Saving data to a JDBC source
-# Drop table before running this
-write.jdbc(df, "jdbc:postgresql:dbserver", "people", user = "username", password = "password")
-# $example off:jdbc_dataset$
+df <- read.jdbc(dbConString, "people", user = "username", password = "password")
+head(df)
 
 # Stop the SparkSession now
 sparkR.session.stop()

@@ -22,9 +22,9 @@
 # To run this example use
 # ./bin/spark-submit examples/src/main/r/data-manipulation.R <path_to_csv>
 
-Sys.setenv(SPARK_HOME = "/home/spicozzi/spark-2.1.0")
+Sys.setenv(SPARK_HOME = "/home/guest/spark-2.1.0")
 Sys.setenv(SPARK_MASTER = "local[*]")
-Sys.setenv(GIT_HOME = "/home/spicozzi/GitHub/MLOps")
+Sys.setenv(GIT_HOME = "/home/guest/MLOps")
 setwd(file.path(Sys.getenv("GIT_HOME"), "/samples"))
 getwd()
 
