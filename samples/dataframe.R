@@ -16,7 +16,9 @@
 #
 
 Sys.setenv(SPARK_HOME = "/home/guest/spark-2.1.0")
-Sys.setenv(SPARK_MASTER = "local[*]")
+Sys.setenv(REMOTE_SPARK_HOME = "/opt/spark")
+# Sys.setenv(SPARK_MASTER = "local[*]")
+Sys.setenv(SPARK_MASTER = "spark://172.17.0.4:7077")
 Sys.setenv(GIT_HOME = "/home/guest/MLOps")
 setwd(file.path(Sys.getenv("GIT_HOME"), "/samples"))
 getwd()
@@ -41,7 +43,7 @@ printSchema(df)
 #  |-- age: double (nullable = true)
 
 # Create a DataFrame from a JSON file
-path <- file.path(Sys.getenv("SPARK_HOME"), "examples/src/main/resources/people.json")
+path <- file.path(Sys.getenv("REMOTE_SPARK_HOME"), "examples/src/main/resources/people.json")
 peopleDF <- read.json(path)
 printSchema(peopleDF)
 # root
