@@ -33,7 +33,7 @@ RUN [ "bash", "-x", "/tmp/scripts/spark/install" ]
 RUN rm -rf /tmp/scripts
 
 # R install added just before USER 185 line
-RUN yum install -y R
+RUN yum install -y R git postgresql-devel
 
 # Switch to the user 185 for OpenShift usage
 USER 185
