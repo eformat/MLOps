@@ -1,5 +1,5 @@
 [
-{"name":"Michael", "age": NULL },
+{"name":"Michael", "age":NA },
 {"name":"Andy", "age":30},
 {"name":"Justin", "age":19}
 ]
