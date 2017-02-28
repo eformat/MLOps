@@ -64,8 +64,8 @@ SFO_DF <- createDataFrame(SFO_df)
 head(SFO_DF)
 
 #  Directly create a SparkDataFrame from the source data
-# flightsDF <- read.df(flightsCsvPathLocal, source = "csv", header = "true")
-flightsDF <- read.df(flightsCsvPathRemote, source = "csv", header = "true")
+flightsDF <- read.df(flightsCsvPathLocal, source = "csv", header = "true")
+# flightsDF <- read.df(flightsCsvPathRemote, source = "csv", header = "true")
 head(flightsDF)
 
 # Print the schema of this SparkDataFrame

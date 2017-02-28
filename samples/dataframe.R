@@ -18,8 +18,9 @@
 Sys.setenv(SPARK_HOME = "/home/guest/spark-2.1.0")
 Sys.setenv(REMOTE_SPARK_HOME = "/opt/spark")
 # Sys.setenv(SPARK_MASTER = "local[*]")
-Sys.setenv(SPARK_MASTER = "spark://172.17.0.4:7077")
+Sys.setenv(SPARK_MASTER = "spark://172.17.0.8:7077")
 Sys.setenv(GIT_HOME = "/home/guest/MLOps")
+Sys.setenv(REMOTE_GIT_HOME = "/tmp/work/MLOps")
 setwd(file.path(Sys.getenv("GIT_HOME"), "/samples"))
 getwd()
 
