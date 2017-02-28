@@ -9,7 +9,9 @@ RUN yum -y install wget
 RUN wget https://download2.rstudio.org/rstudio-server-rhel-1.0.136-x86_64.rpm
 RUN yum -y install rstudio-server-rhel-1.0.136-x86_64.rpm
 
-RUN yum -y install mysql ftp curl libcurl libcurl-devel libpng-devel mesa-libGL-devel mesa-libGLU-devel libpng-devel libxml2 libxml2-devel git openssl-devel postgresql-devel libpq-dev
+RUN yum -y install mysql ftp curl libcurl libcurl-devel libpng-devel mesa-libGL-devel \
+    mesa-libGLU-devel libpng-devel libxml2 libxml2-devel git openssl-devel \
+    postgresql-devel libpq-dev postgresql-libs
 
 RUN useradd guest
 RUN echo guest:guest | chpasswd
