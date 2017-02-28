@@ -27,7 +27,7 @@ getwd()
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 
 # Initialize SparkSession
-sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName = "SparkR-DataFrame-example")
+sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName = "SparkR DataFrame Example")
 
 # Create a simple local data.frame
 localDF <- data.frame(name=c("John", "Smith", "Sarah"), age=c(19, 23, 18))

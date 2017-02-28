@@ -16,6 +16,7 @@
 #
 
 Sys.setenv(SPARK_HOME = "/home/guest/spark-2.1.0")
+Sys.setenv(REMOTE_SPARK_HOME = "/opt/spark")
 Sys.setenv(SPARK_MASTER = "local[*]")
 Sys.setenv(GIT_HOME = "/home/guest/MLOps")
 Sys.setenv(DB_HOST = "172.30.93.75")

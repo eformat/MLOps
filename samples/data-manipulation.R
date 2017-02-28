@@ -23,8 +23,11 @@
 # ./bin/spark-submit examples/src/main/r/data-manipulation.R <path_to_csv>
 
 Sys.setenv(SPARK_HOME = "/home/guest/spark-2.1.0")
-Sys.setenv(SPARK_MASTER = "local[*]")
+Sys.setenv(REMOTE_SPARK_HOME = "/opt/spark")
+# Sys.setenv(SPARK_MASTER = "local[*]")
+Sys.setenv(SPARK_MASTER = "spark://172.17.0.8:7077")
 Sys.setenv(GIT_HOME = "/home/guest/MLOps")
+Sys.setenv(REMOTE_GIT_HOME = "/tmp/work/MLOps")
 setwd(file.path(Sys.getenv("GIT_HOME"), "/samples"))
 getwd()
 
@@ -40,11 +43,12 @@ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 # }
 
 ## Initialize SparkSession
-sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName = "SparkR-data-manipulation-example", sparkConfig = list(spark.driver.memory = "4g"))
+sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName = "SparkR DataManipulation Example", sparkConfig = list(spark.driver.memory = "4g"))
 
 # flightsCsvPath <- args[[1]]
 flightsCsvPath <- "http://s3-us-west-2.amazonaws.com/sparkr-data/flights.csv"
-flightsCsvPathlocal <- file.path(Sys.getenv("GIT_HOME"), "/samples/flights.csv")
+flightsCsvPathLocal <- file.path(Sys.getenv("GIT_HOME"), "/samples/flights.csv")
+flightsCsvPathRemote <- file.path(Sys.getenv("REMOTE_GIT_HOME"), "/samples/flights.csv")
 
 # Create a local R dataframe
 flights_df <- read.csv(flightsCsvPath, header = TRUE)
@@ -60,8 +64,8 @@ SFO_DF <- createDataFrame(SFO_df)
 head(SFO_DF)
 
 #  Directly create a SparkDataFrame from the source data
-# flightsDF <- read.df(flightsCsvPath, source = "csv", header = "true")
-flightsDF <- read.df(flightsCsvPathlocal, source = "csv", header = "true")
+# flightsDF <- read.df(flightsCsvPathLocal, source = "csv", header = "true")
+flightsDF <- read.df(flightsCsvPathRemote, source = "csv", header = "true")
 head(flightsDF)
 
 # Print the schema of this SparkDataFrame
