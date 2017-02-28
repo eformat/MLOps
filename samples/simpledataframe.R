@@ -10,9 +10,19 @@ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 sparkR.session.stop()
 sparkR.session(master = Sys.getenv("SPARK_MASTER"), appName="RStudio Simple Spark DF")
 
-# Local DataFrame Test
-df <- as.DataFrame(faithful)
-head(df)
+# Spark DateFrame from Local DataFrame Test
+faithfulDF <- createDataFrame(faithful)
+head(faithfulDF)
+printSchema(faithfulDF)
+
+# SQL statements can be run by using the sql methods
+createOrReplaceTempView(faithfulDF, "faithful")
+waiting <- sql("SELECT eruptions, waiting FROM faithful WHERE waiting <= 60")
+head(waiting)
+
+# Local DateFrame from Spark DataFrame Test
+localFaithfulDF <- collect(waiting)
+head(localFaithfulDF)
 
 sparkR.session.stop()
 

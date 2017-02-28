@@ -44,9 +44,23 @@ printSchema(df)
 #  |-- age: double (nullable = true)
 
 # Create a DataFrame from a JSON file
-path <- file.path(Sys.getenv("REMOTE_SPARK_HOME"), "examples/src/main/resources/people.json")
-peopleDF <- read.json(path)
+# path <- file.path(Sys.getenv("GIT_HOME"), "spark-2.1.0/examples/src/main/resources/people.json")
+path <-'https://raw.githubusercontent.com/StefanoPicozzi/MLOps/master/spark-2.1.0/examples/src/main/resources/people.json'
+
+require(RJSONIO)
+require(readr)
+jsonstring <- read_file(path)
+jsonDF <- fromJSON(jsonstring)
+jsonDF <- lapply(jsonDF, function(x) { 
+  x[sapply(x, is.null)] <- NA 
+  unlist(x)
+})
+jsonDF <- as.data.frame(do.call("rbind", jsonDF))
+
+peopleDF <- createDataFrame(jsonDF)
 printSchema(peopleDF)
+head(peopleDF)
+
 # root
 #  |-- age: long (nullable = true)
 #  |-- name: string (nullable = true)
