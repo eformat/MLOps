@@ -11,7 +11,7 @@ RUN yum -y install rstudio-server-rhel-1.0.136-x86_64.rpm
 
 RUN yum -y install mysql ftp curl libcurl libcurl-devel libpng-devel mesa-libGL-devel 
 RUN yum -y install mesa-libGLU-devel libpng-devel libxml2 libxml2-devel git openssl-devel 
-RUN yum -y install postgresql-devel libpq-dev postgresql-libs
+RUN yum -y install libpq-dev postgresql-libs
 
 RUN useradd guest
 RUN echo guest:guest | chpasswd
@@ -21,6 +21,8 @@ RUN echo rstudio:rstudio | chpasswd
 
 RUN useradd admin
 RUN echo admin:admin | chpasswd
+
+RUN yum -y install postgresql-devel
 
 USER root
 EXPOSE 8787
