@@ -2,8 +2,6 @@
 FROM centos:latest
 MAINTAINER Stefano Picozzi
 
-USER root
-
 RUN yum -y install epel-release
 RUN yum -y install R
 RUN yum -y install wget
@@ -23,6 +21,8 @@ RUN echo rstudio:rstudio | chpasswd
 
 RUN useradd admin
 RUN echo admin:admin | chpasswd
+
+USER root
 
 RUN yum -y install postgresql-devel
 
