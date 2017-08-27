@@ -1,6 +1,8 @@
 Sys.setenv(SPARK_HOME ="/home/guest/spark-2.1.0")
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
-sparkR.session(master = "spark://172.30.25.144:7077", sparkConfig = list(spark.driver.memory = "1g"))
+sc <- sparkR.session(master = "spark://172.30.25.144:7077", 
+                     sparkConfig = list(spark.driver.memory = "1g"), 
+                     sparkPackages="com.databricks:spark-csv_2.11:1.2.0")
 
 sqlContext <- sparkRSQL.init(sc)
 
