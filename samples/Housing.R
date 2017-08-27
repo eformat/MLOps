@@ -1,4 +1,6 @@
-
+Sys.setenv(SPARK_HOME ="/home/guest/spark-2.1.0")
+library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
+sparkR.session(master = "spark://172.30.25.144:7077", sparkConfig = list(spark.driver.memory = "1g"))
 
 sqlContext <- sparkRSQL.init(sc)
 
@@ -138,6 +140,7 @@ housing_avg_sorted$REGION <- factor(
 )
 housing_avg_sorted
 
+sparkR.session.stop()
 
 
 
