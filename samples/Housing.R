@@ -7,6 +7,8 @@ sc <- sparkR.session(master = "spark://172.30.253.81:7077",
                sparkPackages = "com.databricks:spark-csv_2.11:1.2.0"
                     )
 
+# sparkPackages = c("com.databricks:spark-csv_2.11:1.2.0", "org.apache.hadoop:hadoop-aws:2.7.3", "com.amazonaws:aws-java-sdk-pom:1.10.34")
+
 #housing_a_file_path <- file.path('/home/guest', 'housing', 'ss13husa.csv')
 #housing_b_file_path <- file.path('/home/guest', 'housing', 'ss13husb.csv')
 housing_a_file_path <- file.path('s3://bit_bucket', 'housing', 'ss13husa.csv')
