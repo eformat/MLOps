@@ -3,7 +3,7 @@ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 
 sc <- sparkR.session(master = "spark://172.30.253.81:7077", 
                sparkConfig = list(spark.driver.memory="1g"),
-               sparkJars = c("org.apache.hadoop:hadoop-aws:2.7.3"),
+               sparkJars = c("org.apache.hadoop.hadoop-aws-2.7.3"),
                sparkPackages = c("com.databricks:spark-csv_2.11:1.2.0")
                     )
 
