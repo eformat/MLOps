@@ -9,19 +9,8 @@ sqlContext <- sparkRSQL.init(sc)
 housing_a_file_path <- file.path('/home/guest', 'housing', 'ss13husa.csv')
 housing_b_file_path <- file.path('/home/guest', 'housing', 'ss13husb.csv')
 
-housing_a_df <- read.df(sqlContext, 
-                            housing_a_file_path, 
-                            header='true', 
-                            source = "com.databricks.spark.csv", 
-                            inferSchema='true')
-
-
-housing_b_df <- read.df(sqlContext, 
-                            housing_b_file_path, 
-                            header='true', 
-                            source = "com.databricks.spark.csv", 
-                            inferSchema='true')
-
+housing_a_df <- read.df(housing_a_file_path, source = "csv", header="true", inferSchema = "true")
+housing_b_df <- read.df(housing_b_file_path, source = "csv", header="true", inferSchema = "true")
 
 housing_df <- rbind(housing_a_df, housing_b_df)
 nrow(housing_df)
