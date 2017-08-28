@@ -1,13 +1,13 @@
 Sys.setenv(SPARK_HOME ="/home/guest/spark-2.1.0")
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
-sc <- sparkR.session(master = "spark://172.30.25.144:7077", 
+sc <- sparkR.session(master = "spark://172.30.253.81:7077", 
                      sparkConfig = list(spark.driver.memory = "1g"), 
                      sparkPackages="com.databricks:spark-csv_2.11:1.2.0")
 
 sqlContext <- sparkRSQL.init(sc)
 
-housing_a_file_path <- file.path('', 'nfs','data','2013-acs','ss13husa.csv')
-housing_b_file_path <- file.path('', 'nfs','data','2013-acs','ss13husb.csv')
+housing_a_file_path <- file.path('/home/guest', 'housing', 'ss13husa.csv')
+housing_b_file_path <- file.path('/home/guest', 'housing', 'ss13husb.csv')
 
 housing_a_df <- read.df(sqlContext, 
                             housing_a_file_path, 
@@ -143,14 +143,6 @@ housing_avg_sorted$REGION <- factor(
 housing_avg_sorted
 
 sparkR.session.stop()
-
-
-
-
-
-
-
-
 
 
 
