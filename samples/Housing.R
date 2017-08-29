@@ -59,7 +59,7 @@ housing_valp_1000
 registerTempTable(housing_df, "housing")
 
 system.time(
-        housing_valp_1000_sql <- collect(sql(sqlContext, "SELECT REGION, VALP FROM housing WHERE VALP >= 1000"))
+        housing_valp_1000_sql <- collect(sql(sc, "SELECT REGION, VALP FROM housing WHERE VALP >= 1000"))
 )
 
 housing_valp_1000_sql
