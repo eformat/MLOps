@@ -9,6 +9,7 @@ Sys.setenv("AWS_SECRET_ACCESS_KEY" = "XXXXX")
 
 Sys.setenv(SPARK_HOME ="/home/guest/spark-2.1.0")
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
+library(ggplot2)
 
 sc <- sparkR.session(master = "spark://172.30.253.81:7077", 
                      sparkConfig = list(spark.driver.memory="1g"),
@@ -23,8 +24,6 @@ housing_b_df <- read.df(housing_b_file_path, source = "csv", header="true", infe
 housing_df <- rbind(housing_a_df, housing_b_df)
 nrow(housing_df)
 head(housing_df)
-
-library(ggplot2)
 
 housing_region_df_local <- collect(select(housing_df,"REGION"))
 str(housing_region_df_local)
