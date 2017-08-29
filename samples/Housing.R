@@ -1,4 +1,9 @@
 
+# Important s3 requirement 
+# Add aws-java-sdk-1.7.4.jar and hadoop-aws-2.7.3.jar to your SPARK_HOME/jars
+# wget http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.3/hadoop-aws-2.7.3.jar
+# wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
+
 Sys.setenv("AWS_ACCESS_KEY_ID" = "XXXXX")
 Sys.setenv("AWS_SECRET_ACCESS_KEY" = "XXXXX")
 
