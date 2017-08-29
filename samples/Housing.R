@@ -1,18 +1,16 @@
+
+Sys.setenv("AWS_ACCESS_KEY_ID" = "XXXXX")
+Sys.setenv("AWS_SECRET_ACCESS_KEY" = "XXXXX")
+
 Sys.setenv(SPARK_HOME ="/home/guest/spark-2.1.0")
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 
 sc <- sparkR.session(master = "spark://172.30.253.81:7077", 
-               sparkConfig = list(spark.driver.memory="1g"),
-               sparkJars = c("org.apache.hadoop.hadoop-aws-2.7.3"),
-               sparkPackages = "com.databricks:spark-csv_2.11:1.2.0"
+                     sparkConfig = list(spark.driver.memory="1g"),
                     )
 
-# sparkPackages = c("com.databricks:spark-csv_2.11:1.2.0", "org.apache.hadoop:hadoop-aws:2.7.3", "com.amazonaws:aws-java-sdk-pom:1.10.34")
-
-#housing_a_file_path <- file.path('/home/guest', 'housing', 'ss13husa.csv')
-#housing_b_file_path <- file.path('/home/guest', 'housing', 'ss13husb.csv')
-housing_a_file_path <- file.path('s3://bit_bucket', 'housing', 'ss13husa.csv')
-housing_b_file_path <- file.path('s3://bit_bucket', 'housing', 'ss13husb.csv')
+housing_a_file_path <- file.path('s3://stefanopicozzi.blog', 'csv_hus', 'ss13husa.csv')
+housing_b_file_path <- file.path('s3://stefanopicozzi.blog', 'csv_hus', 'ss13husb.csv')
 
 housing_a_df <- read.df(housing_a_file_path, source = "csv", header="true", inferSchema = "true")
 housing_b_df <- read.df(housing_b_file_path, source = "csv", header="true", inferSchema = "true")
