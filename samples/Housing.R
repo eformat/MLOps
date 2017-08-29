@@ -35,8 +35,8 @@ housing_region_df_local$REGION <- factor(
 )
 
 c <- ggplot(data=housing_region_df_local, aes(x=factor(REGION)))
-
 c + geom_bar() + xlab("Region")
+print(c)
 
 collect(select(housing_df, "REGION", "VALP"))
 
@@ -85,8 +85,10 @@ housing_valp_1000_bracket$REGION <- factor(
         levels=c(1,2,3,4,9),
         labels=c('Northeast', 'Midwest','South','West','Puerto Rico')
 )
+
 c <- ggplot(data=housing_region_df_local, aes(x=factor(REGION)))
 c + geom_bar() + ggtitle("Samples with VALP>1000") + xlab("Region")
+print(c)
 
 collect(select(housing_df, avg(housing_df$VALP)))
 
