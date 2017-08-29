@@ -32,12 +32,14 @@ RUN [ "bash", "-x", "/tmp/scripts/spark/install" ]
 # Cleanup the scripts directory
 RUN rm -rf /tmp/scripts
 
+# StefanoPicozzi start
 # R install added just before USER 185 line
 RUN yum install -y R git postgresql-devel
-
+#Add jars needed for s3 access
 RUN cd /opt/spark/jars && \
     wget http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.3/hadoop-aws-2.7.3.jar && \
     wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
+# StefanoPicozzi end
 
 # Switch to the user 185 for OpenShift usage
 USER 185
