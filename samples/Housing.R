@@ -4,10 +4,10 @@
 # wget http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.3/hadoop-aws-2.7.3.jar
 # wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
 
-Sys.setenv("AWS_ACCESS_KEY_ID" = "XXXXX")
-Sys.setenv("AWS_SECRET_ACCESS_KEY" = "XXXXX")
+Sys.setenv("AWS_ACCESS_KEY_ID" = "***")
+Sys.setenv("AWS_SECRET_ACCESS_KEY" = "***")
 
-Sys.setenv(SPARK_HOME ="/home/guest/spark-2.1.0")
+Sys.setenv(SPARK_HOME ="/opt/spark")
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 library(ggplot2)
 
