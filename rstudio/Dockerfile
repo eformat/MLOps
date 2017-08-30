@@ -6,7 +6,7 @@ RUN yum -y install epel-release
 RUN yum -y install R
 RUN yum -y install wget
 
-RUN wget https://download2.rstudio.org/rstudio-server-rhel-1.0.136-x86_64.rpm
+RUN wget https://download2.rstudio.org/rstudio-server-rhel-1.0.153-x86_64.rpm
 RUN yum -y install rstudio-server-rhel-1.0.136-x86_64.rpm
 
 RUN yum -y install mysql ftp curl libcurl libcurl-devel libpng-devel mesa-libGL-devel 
