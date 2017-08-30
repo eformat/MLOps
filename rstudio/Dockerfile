@@ -11,7 +11,7 @@ RUN yum -y install rstudio-server-rhel-1.0.153-x86_64.rpm
 
 RUN yum -y install mysql ftp curl libcurl libcurl-devel libpng-devel mesa-libGL-devel 
 RUN yum -y install mesa-libGLU-devel libpng-devel libxml2 libxml2-devel git openssl-devel 
-RUN yum -y install libpq-dev postgresql-libs
+RUN yum -y install libpq-dev postgresql-libs postgresql-devel
 
 RUN cd /opt && \
     wget https://d3kbcqa49mib13.cloudfront.net/spark-2.1.0-bin-hadoop2.7.tgz && \
@@ -32,8 +32,6 @@ RUN useradd admin
 RUN echo admin:admin | chpasswd
 
 USER root
-
-RUN yum -y install postgresql-devel
 
 EXPOSE 8787
 CMD /usr/lib/rstudio-server/bin/rserver --server-daemonize 0
