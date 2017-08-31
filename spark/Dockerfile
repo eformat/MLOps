@@ -1,4 +1,4 @@
-FROM https://raw.githubusercontent.com/radanalyticsio/openshift-spark/master/Dockerfile
+FROM radanalyticsio/openshift-spark
 
 # StefanoPicozzi start
 USER root
