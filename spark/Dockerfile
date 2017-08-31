@@ -1,56 +1,19 @@
-FROM centos:latest
-
-MAINTAINER Matthew Farrellee <matt@cs.wisc.edu>
-
-USER root
-ARG DISTRO_LOC=https://dist.apache.org/repos/dist/release/spark/spark-2.1.0/spark-2.1.0-bin-hadoop2.7.tgz
-ARG DISTRO_NAME=spark-2.1.0-bin-hadoop2.7
-
-RUN yum install -y epel-release tar java && \
-    yum clean all
-
-RUN cd /opt && \
-    curl $DISTRO_LOC  | \
-        tar -zx && \
-    ln -s $DISTRO_NAME spark
-
-# when the containers are not run w/ uid 0, the uid may not map in
-# /etc/passwd and it may not be possible to modify things like
-# /etc/hosts. nss_wrapper provides an LD_PRELOAD way to modify passwd
-# and hosts.
-RUN yum install -y nss_wrapper numpy && yum clean all
-
-ENV PATH=$PATH:/opt/spark/bin
-ENV SPARK_HOME=/opt/spark
-
-# Add scripts used to configure the image
-COPY scripts /tmp/scripts
-
-# Custom scripts
-RUN [ "bash", "-x", "/tmp/scripts/spark/install" ]
-
-# Cleanup the scripts directory
-RUN rm -rf /tmp/scripts
+FROM https://raw.githubusercontent.com/radanalyticsio/openshift-spark/master/Dockerfile
 
 # StefanoPicozzi start
+USER root
+RUN yum install -y R
+RUN yum install -y wget
+RUN cd /opt/spark/jars && \
+    wget http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.3/hadoop-aws-2.7.3.jar && \
+    wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
 # R install added just before USER 185 line
 RUN yum install -y R git postgresql-devel
 #Add jars needed for s3 access
 RUN cd /opt/spark/jars && \
     wget http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.3/hadoop-aws-2.7.3.jar && \
     wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
-# StefanoPicozzi end
-
 # Switch to the user 185 for OpenShift usage
 USER 185
+# StefanoPicozzi end
 
-# Make the default PWD somewhere that the user can write. This is
-# useful when connecting with 'oc run' and starting a 'spark-shell',
-# which will likely try to create files and directories in PWD and
-# error out if it cannot.
-WORKDIR /tmp
-
-ENTRYPOINT ["/entrypoint"]
-
-# Start the main process
-CMD ["/opt/spark/bin/launch.sh"]
