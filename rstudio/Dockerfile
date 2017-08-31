@@ -1,5 +1,5 @@
 FROM centos:latest
-MAINTAINER Stefano Picozzi
+MAINTAINER Stefano Picozzi <StefanoPicozzi@gmail.com>
 
 RUN yum -y install epel-release && \
     yum -y install R && \
