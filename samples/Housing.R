@@ -9,7 +9,8 @@ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 library(ggplot2)
 
 # Edit to reflect your Spark master end point
-sc <- sparkR.session(master = "spark://172.30.253.81:7077", 
+sc <- sparkR.session(master = "spark://172.30.253.81:7077",
+                     appName = "Housing",
                      sparkConfig = list(spark.driver.memory="1g"),
                     )
 
