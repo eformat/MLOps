@@ -11,17 +11,24 @@ library(ggplot2)
 # Edit to reflect your Spark master end point
 sc <- sparkR.session(master = "spark://172.30.253.81:7077",
                      appName = "Housing",
-                     sparkConfig = list(spark.driver.memory="1g"),
+                     sparkConfig = list(spark.driver.memory="2g"),
                     )
 
 # Edit to reflect you AWS S3 Bucket file locations
-housing_a_file_path <- file.path('s3a://stefanopicozzi.blog', 'csv_hus', 'ss13husa.csv')
-housing_b_file_path <- file.path('s3a://stefanopicozzi.blog', 'csv_hus', 'ss13husb.csv')
+housing_a_file_path <- file.path('s3n://stefanopicozzi.blog', 'csv_hus', 'ss13husa.csv')
+housing_b_file_path <- file.path('s3n://stefanopicozzi.blog', 'csv_hus', 'ss13husb.csv')
 
-housing_a_df <- read.df(housing_a_file_path, source = "csv", header="true", inferSchema = "true")
-housing_b_df <- read.df(housing_b_file_path, source = "csv", header="true", inferSchema = "true")
+system.time (
+  housing_a_df <- read.df(housing_a_file_path, source = "csv", header="true", inferSchema = "true")
+)
+system.time (
+  housing_b_df <- read.df(housing_b_file_path, source = "csv", header="true", inferSchema = "true")
+)
 
-housing_df <- rbind(housing_a_df, housing_b_df)
+system.time (
+  housing_df <- rbind(housing_a_df, housing_b_df)
+)
+
 nrow(housing_df)
 head(housing_df)
 
