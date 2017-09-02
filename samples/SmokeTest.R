@@ -15,7 +15,8 @@ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 # Local end point is "[local[*]"
 # Remote Spark on OpenShft will look like "spark://172.n.n.n:7077"
 
-sparkR.session(master = "local[*]", 
+sparkR.session(master = "local[*]",
+               appName = "SmokeTest",
                sparkConfig = list(spark.driver.memory = "1g")
               )
 
