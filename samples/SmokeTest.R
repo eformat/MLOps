@@ -12,6 +12,9 @@ Sys.setenv(SPARK_HOME ="/opt/spark")
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 
 # Replace master with your Spark cluster end point
+# Local end point is "[local[*]"
+# Remote Spark on OpenShft will look like "spark://172.n.n.n:7077"
+
 sparkR.session(master = "local[*]", 
                sparkConfig = list(spark.driver.memory = "1g")
               )
