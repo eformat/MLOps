@@ -52,8 +52,9 @@ c <- ggplot(data=housing_region_df_local, aes(x=factor(REGION)))
 c + geom_bar() + xlab("Region")
 print(c)
 
-collect(select(housing_df, "REGION", "VALP"))
-
+system.time (
+  collect(select(housing_df, "REGION", "VALP"))
+)
 system.time(
   collect(select(housing_df, housing_df$VALP))
 )
