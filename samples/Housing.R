@@ -29,7 +29,9 @@ system.time (
   housing_df <- rbind(housing_a_df, housing_b_df)
 )
 
-nrow(housing_df)
+system.time (
+  nrow(housing_df)
+)
 head(housing_df)
 
 housing_region_df_local <- collect(select(housing_df,"REGION"))
@@ -48,17 +50,17 @@ print(c)
 collect(select(housing_df, "REGION", "VALP"))
 
 system.time(
-        collect(select(housing_df, housing_df$VALP))
+  collect(select(housing_df, housing_df$VALP))
 )
 
 system.time(
-        collect(select(housing_df, "VALP"))
+  collect(select(housing_df, "VALP"))
 )
 
 head(selectExpr(housing_df, "(VALP / 100) as VALP_by_100"))
 
 system.time(
-        housing_valp_1000 <- collect(filter(select(housing_df, "REGION", "VALP"), "VALP > 1000"))
+  housing_valp_1000 <- collect(filter(select(housing_df, "REGION", "VALP"), "VALP > 1000"))
 )
 
 housing_valp_1000
@@ -66,24 +68,23 @@ housing_valp_1000
 registerTempTable(housing_df, "housing")
 
 system.time(
-        housing_valp_1000_sql <- collect(sql(sc, "SELECT REGION, VALP FROM housing WHERE VALP >= 1000"))
+  housing_valp_1000_sql <- collect(sql(sc, "SELECT REGION, VALP FROM housing WHERE VALP >= 1000"))
 )
 
 housing_valp_1000_sql
 
 system.time(
-        housing_valp_1000_subset <- collect(subset(
-            housing_df, housing_df$VALP>1000, 
-            c("REGION","VALP")
-        ))
+  housing_valp_1000_subset <- collect(subset(
+    housing_df, housing_df$VALP>1000, c("REGION","VALP"))
+  )
 )
 
 housing_valp_1000_subset
 
 system.time(
-        housing_valp_1000_bracket <- collect(
-            housing_df[housing_df$VALP>1000, c("REGION","VALP")]
-        )
+  housing_valp_1000_bracket <- collect(
+    housing_df[housing_df$VALP>1000, c("REGION","VALP")]
+  )
 )
 
 housing_valp_1000_bracket
