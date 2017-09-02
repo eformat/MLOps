@@ -1,9 +1,6 @@
+# Adapted from https://www.codementor.io/jadianes/spark-r-data-frame-operations-sql-du1080rl5
 
-# Important s3 requirement 
-# Add aws-java-sdk-1.7.4.jar and hadoop-aws-2.7.3.jar to your SPARK_HOME/jars
-# wget http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.3/hadoop-aws-2.7.3.jar
-# wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
-
+# Edit to reflect your AWS S3 credentials
 Sys.setenv("AWS_ACCESS_KEY_ID" = "***")
 Sys.setenv("AWS_SECRET_ACCESS_KEY" = "***")
 
@@ -11,10 +8,12 @@ Sys.setenv(SPARK_HOME ="/opt/spark")
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 library(ggplot2)
 
+# Edit to reflect your Spark master end point
 sc <- sparkR.session(master = "spark://172.30.253.81:7077", 
                      sparkConfig = list(spark.driver.memory="1g"),
                     )
 
+# Edit to reflect you AWS S3 Bucket file locations
 housing_a_file_path <- file.path('s3a://stefanopicozzi.blog', 'csv_hus', 'ss13husa.csv')
 housing_b_file_path <- file.path('s3a://stefanopicozzi.blog', 'csv_hus', 'ss13husb.csv')
 
