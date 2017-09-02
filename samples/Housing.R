@@ -34,13 +34,18 @@ system.time (
 )
 head(housing_df)
 
-housing_region_df_local <- collect(select(housing_df,"REGION"))
+system.time (
+  housing_region_df_local <- collect(select(housing_df,"REGION"))
+)
+
 str(housing_region_df_local)
 
-housing_region_df_local$REGION <- factor(
+system.time (
+  housing_region_df_local$REGION <- factor(
         x=housing_region_df_local$REGION, 
         levels=c(1,2,3,4,9),
         labels=c('Northeast', 'Midwest','South','West','Puerto Rico')
+  )
 )
 
 c <- ggplot(data=housing_region_df_local, aes(x=factor(REGION)))
