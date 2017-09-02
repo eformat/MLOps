@@ -7,7 +7,7 @@ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 # Edit to reflect your Spark master end point
 sparkR.session(master = "spark://172.17.0.6:7077", 
                appName = "Wendy",
-               sparkConfig = list(spark.driver.memory = "1g"))
+               sparkConfig = list(spark.driver.memory = "2g"))
 library("magrittr")
 
 # 1.
