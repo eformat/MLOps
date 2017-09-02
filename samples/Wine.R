@@ -48,7 +48,7 @@ write.ml(model, model_file_path)
 saved_model <- read.ml(model_file_path)  
 summary(saved_model)
 
-spark.session.stop()
+sparkR.session.stop()
 
 
 
