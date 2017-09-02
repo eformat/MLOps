@@ -6,6 +6,9 @@ Sys.setenv("AWS_SECRET_ACCESS_KEY" = "***")
 # Replace with your Spark distribution location
 Sys.setenv(SPARK_HOME ="/opt/spark")
 
+# Jupyter r-notebook example requires this setting
+# Sys.setenv(SPARK_HOME ="/home/jovyan/spark")
+
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 
 # Replace master with your Spark cluster end point
