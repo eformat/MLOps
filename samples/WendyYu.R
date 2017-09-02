@@ -1,3 +1,6 @@
+
+# Adapted from https://rpubs.com/wendyu/sparkr
+
 Sys.setenv(SPARK_HOME ="/opt/spark")
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 sparkR.session(master = "spark://172.17.0.6:7077", sparkConfig = list(spark.driver.memory = "1g"))
