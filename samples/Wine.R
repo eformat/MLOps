@@ -1,8 +1,10 @@
 # Adapted from http://blog.learningtree.com/machine-learning-using-spark-r/
 
-# Prepare data
+# Install these packages
 library(readr)  
-library(dplyr)  
+library(dplyr)
+
+# Prepare data
 url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv"  
 df <-  
   read_delim(url, delim = ";") %>%  
@@ -13,7 +15,9 @@ df <- dplyr::mutate(df, id = as.integer(rownames(df)))
 # Connect to Spark cluster
 Sys.setenv(SPARK_HOME="/opt/spark")
 library(SparkR, lib.loc=c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
-sparkR.session(master="local[*]")
+sparkR.session(master="spark://172.30.63.205:7077",                     
+               sparkConfig = list(spark.driver.memory="2g")
+              )
 
 # Create Spark distributed dataframe
 ddf <- createDataFrame(df)
