@@ -47,7 +47,7 @@ mean(actual_vs_predicted$actual == actual_vs_predicted$predicted)
 table(actual_vs_predicted$actual, actual_vs_predicted$predicted)
 
 # Save model for future use
-model_file_path <- "home/andrew/wine_random_forest_model"  
+model_file_path <- "/tmp/wine_random_forest_model"  
 write.ml(model, model_file_path)  
 saved_model <- read.ml(model_file_path)  
 summary(saved_model)
