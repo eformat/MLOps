@@ -11,7 +11,7 @@ df <-
 df <- dplyr::mutate(df, id = as.integer(rownames(df)))
 
 # Connect to Spark cluster
-Sys.setenv(SPARK_HOME="/home/andrew/spark-2.1.0-bin-hadoop2.7")
+Sys.setenv(SPARK_HOME="/opt/spark")
 library(SparkR, lib.loc=c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 sparkR.session(master="local[*]")
 
