@@ -8,7 +8,7 @@ library(dplyr)
 url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv"  
 df <-  
 #  read_delim(url, delim = ";") %>%  
-  read.csv(file=url, header=TRUE, sep=";") %>
+  read.csv(file=url, header=TRUE, sep=";") %>%
   dplyr::mutate(taste = as.factor(ifelse(quality < 6, "bad", ifelse(quality > 6, "good", "average")))) %>%  
   dplyr::select(-quality)  
 df <- dplyr::mutate(df, id = as.integer(rownames(df)))
