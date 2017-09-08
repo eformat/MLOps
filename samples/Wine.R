@@ -36,7 +36,7 @@ summary(model)
 
 # Use model to make predictions
 predictions <- predict(model, test_ddf)  
-prediction_df <- collect(select(predictions, "id", "prediction"))
+prediction_df <- SparkR::collect(SparkR::select(predictions, "id", "prediction"))
 
 # Test accuracy by comparing to actuals
 actual_vs_predicted <-  
