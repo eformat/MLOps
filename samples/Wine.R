@@ -16,7 +16,8 @@ df <- dplyr::mutate(df, id = as.integer(rownames(df)))
 # Connect to Spark cluster
 Sys.setenv(SPARK_HOME="/opt/spark")
 library(SparkR, lib.loc=c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
-sparkR.session(master="spark://172.30.63.205:7077",                     
+sparkR.session(master = "spark://172.30.63.205:7077", 
+               appName = "Wine Grading",
                sparkConfig = list(spark.driver.memory="2g")
               )
 
