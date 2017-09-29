@@ -1,7 +1,6 @@
-
 # Replace with your AWS S3 credentials
-Sys.setenv("AWS_ACCESS_KEY_ID" = "***") 
-Sys.setenv("AWS_SECRET_ACCESS_KEY" = "***")
+Sys.setenv("AWS_ACCESS_KEY_ID" = "*") 
+Sys.setenv("AWS_SECRET_ACCESS_KEY" = "*")
 
 # Replace with your Spark distribution location
 Sys.setenv(SPARK_HOME ="/opt/spark")
