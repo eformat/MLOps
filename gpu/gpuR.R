@@ -31,3 +31,9 @@ for (exponent in seq(2,24,2)){
 
 colnames(result) <- c("nrow", "time_classic", "time_gpu", "time_vcl")
 result
+
+library(ggplot2)
+library("reshape2")
+
+melted = melt(result, id.vars="nrow")
+ggplot(data=melted, aes(x=nrow, y=value, group=variable)) + geom_line()
