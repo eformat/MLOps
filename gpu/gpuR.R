@@ -1,0 +1,33 @@
+# Adapated from
+# https://rpubs.com/christoph_euler/gpuR_examples
+
+library("gpuR")
+detectGPUs()
+
+result <- data.frame()
+
+for (exponent in seq(2,24,2)){
+  A = matrix(rnorm(2^exponent), nrow=sqrt(2^exponent))
+  B = matrix(rnorm(2^exponent), nrow=sqrt(2^exponent))
+  
+  now <- Sys.time()
+  gpuA = gpuMatrix(A, type="double")
+  gpuB = gpuMatrix(B, type="double")
+  gpuC = gpuA %*% gpuB
+  gpu <- Sys.time()-now
+  
+  now <- Sys.time()
+  C = A%*%B
+  classic <- Sys.time()-now
+  
+  now <- Sys.time()
+  vclA = vclMatrix(A, type="double")
+  vclB = vclMatrix(B, type="double")
+  vclC = vclA %*% vclB
+  vcl <- Sys.time()-now
+  
+  result <- rbind(result,c(nrow(A), classic, gpu, vcl)) 
+}
+
+colnames(result) <- c("nrow", "time_classic", "time_gpu", "time_vcl")
+result
