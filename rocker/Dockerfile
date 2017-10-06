@@ -25,9 +25,7 @@ RUN cd /opt/spark/jars && \
 # RUN sudo apt-get update
 # RUN sudo apt-get install -y cuda
 
-RUN userdel -r -f guest && \
-    userdel -r -f admin && \
-    useradd guest && \
+RUN useradd guest && \
     echo guest:guest | chpasswd && \
     useradd admin && \
     echo admin:admin | chpasswd
