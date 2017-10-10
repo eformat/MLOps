@@ -1,4 +1,4 @@
-# Adapted from
+# Ripped from
 # https://keras.rstudio.com/
 
 library(keras)
