@@ -1,6 +1,11 @@
-# library(pryr) #if we wanted to look at addresses
-nr <- 5000  #lets be square
+# library(pryr) 
+# if we wanted to look at addresses
+
+nr <- 5000  
+
+#lets be square
 x <- matrix(rnorm(nr * nr, 0, 1), nrow = nr, ncol = nr)
+
 # CPU bound version, we could optimize but lets stay vanilla
 time1 <- system.time({
   mm1 <- x %*% x
@@ -9,13 +14,16 @@ time1 <- system.time({
 library(gpuR)
 
 # GPU version, GPU pointer to CPU memory!! (gpuMatrix is simply a pointer)
-gpuX = gpuMatrix(x, type = "float")  #point GPU to matrix
+gpuX = gpuMatrix(x, type = "float")  
+#point GPU to matrix
 time2 <- system.time({
   mm2 <- gpuX %*% gpuX
 })
 
 # GPU version, in GPU memory!! (vclMatrix formation is a memory transfer)
-vclX = vclMatrix(x, type = "float")  #push matrix to GPU
+vclX = vclMatrix(x, type = "float")  
+
+#push matrix to GPU
 time3 <- system.time({
   mm3 <- vclX %*% vclX
 })
@@ -40,14 +48,18 @@ time2 <- system.time({
 library(gpuR)
 
 # GPU version, GPU pointer to CPU memory!! (gpuMatrix is simply a pointer)
-gpuX = gpuMatrix(X, type = "float") #point GPU to matrix
+gpuX = gpuMatrix(X, type = "float") 
+
+#point GPU to matrix
 gpuy = gpuMatrix(y, type = "float")
 time4 <- system.time({
   ms4 <- gpuR::solve(gpuR::crossprod(gpuX), gpuR::crossprod(gpuX, gpuy))
 })
 
 # GPU version, in GPU memory!! (vclMatrix formation is a memory transfer)
-vclX = vclMatrix(X, type = "float") #push matrix to GPU
+vclX = vclMatrix(X, type = "float") 
+
+#push matrix to GPU
 vcly = vclMatrix(y, type = "float")
 time5 <- system.time({
   ms5 <- gpuR::solve(gpuR::crossprod(vclX), gpuR::crossprod(vclX, vcly))
