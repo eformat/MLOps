@@ -1,4 +1,4 @@
-# Adapated from
+# Ripped from
 # https://rpubs.com/christoph_euler/gpuR_examples
 
 library("gpuR")
