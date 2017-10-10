@@ -34,10 +34,14 @@ time2
 time3
 
 set.seed(123456)
-np <- 30 #number of predictors
-nr <- 1e+05 #number of observations
-X <- cbind(5, 1:nr, matrix(rnorm((np - 1) * nr, 0, 0.01), nrow = nr, ncol = (np -
-                                                                               1)))
+
+np <- 30 
+#number of predictors
+
+nr <- 1e+05 
+#number of observations
+
+X <- cbind(5, 1:nr, matrix(rnorm((np - 1) * nr, 0, 0.01), nrow = nr, ncol = (np - 1)))
 beta <- matrix(c(1, 3, runif(np - 1, 0, 0.2)), ncol = 1)
 y <- X %*% beta + matrix(rnorm(nr, 0, 1), nrow = nr, ncol = 1)
 # CPU bound version, slight optimize via crossprod but otherwise vanilla
