@@ -16,10 +16,8 @@ RUN cd /opt/spark/jars && \
     wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
 
 RUN userdel guest; exit 0
-RUN userdel admin; exit 0
-    
-RUN useradd guest && \
-    echo guest:guest | chpasswd && \
-    useradd admin && \
-    echo admin:admin | chpasswd
 
+RUN useradd guest \
+    && echo "guest:guest" | chpasswd \
+    && mkdir /home/guest \
+    && chown rstudio:guest /home/guest
