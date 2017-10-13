@@ -1,4 +1,5 @@
-
+# Ripped from
+# https://www.tensorflow.org/tutorials/mandelbrot
 
 # Import libraries for simulation
 import tensorflow as tf
