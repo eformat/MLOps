@@ -7,8 +7,7 @@ RUN yum install -y cuda; \
     echo -e 'export CUDA_HOME=/usr/local/cuda \n \
              export CUDA_PATH=${CUDA_HOME} \n \
              eexport PATH=${CUDA_HOME}/bin:${PATH} \n \
-             export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:/usr/local/lib:$LD_LIBRARY_PATH ' && \
-    ~/.bashrc; \
+             export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:/usr/local/lib:$LD_LIBRARY_PATH ' >> ~/.bashrc; \
     cd /tmp && \
     curl -fsSLO "http://developer.download.nvidia.com/compute/redist/cudnn/v6.0/cudnn-8.0-linux-x64-v6.0.tgz"; \
     tar -C /usr/local -zxf /tmp/cudnn-8.0-linux-x64-v6.0.tgz
@@ -31,8 +30,7 @@ RUN yum install -y cmake3; cd /tmp && \
              [nvcc] \n \
              fastmath=True \n \
              [cuda] \n \
-             root=/usr/local/cuda \n ' && \
-    ~/.theanorc ; \
+             root=/usr/local/cuda \n ' >> ~/.theanorc ; \
     pip install Theano
 
 RUN curl https://raw.githubusercontent.com/Lasagne/Lasagne/master/examples/mnist.py -o /root/mnist.py
