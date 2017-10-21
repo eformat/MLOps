@@ -27,13 +27,7 @@ RUN yum install -y cmake3; cd /tmp && \
     pip install Cython; cd /tmp/libgpuarray && \
     python setup.py build_ext -L /usr/local/lib64 -I /usr/local/include && \
     python setup.py install && ldconfig; \
-    echo -e '[global] \n \
-             device = cuda0 \n \
-             floatX = float32 \n \
-             [nvcc] \n \
-             fastmath=True \n \
-             [cuda] \n \
-             root=/usr/local/cuda \n ' >> ~/.theanorc ; \
+    echo -e '[global] \ndevice = cuda0 \nfloatX = float32 \n[nvcc] \nfastmath=True \n[cuda] \nroot=/usr/local/cuda \n' >> ~/.theanorc ; \
     pip install Theano
 
 RUN curl https://raw.githubusercontent.com/Lasagne/Lasagne/master/examples/mnist.py -o /root/mnist.py
