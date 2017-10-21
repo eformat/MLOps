@@ -7,7 +7,7 @@ RUN yum install -y cuda; \
     export CUDA_HOME="/usr/local/cuda" CUDA_PATH="${CUDA_HOME}" PATH="${CUDA_HOME}/bin${PATH:+:${PATH}}" LD_LIBRARY_PATH="${CUDA_HOME}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"; \
     echo -e 'export CUDA_HOME=/usr/local/cuda \n \
              export CUDA_PATH=${CUDA_HOME} \n \
-             eexport PATH=${CUDA_HOME}/bin:${PATH} \n \
+             export PATH=${CUDA_HOME}/bin:${PATH} \n \
              export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:/usr/local/lib:$LD_LIBRARY_PATH ' >> ~/.bashrc; \
     cd /tmp && \
     curl -fsSLO "http://developer.download.nvidia.com/compute/redist/cudnn/v6.0/cudnn-8.0-linux-x64-v6.0.tgz"; \
