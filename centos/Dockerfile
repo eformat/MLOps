@@ -32,3 +32,8 @@ RUN yum install -y python-pip python-devel; pip install --upgrade pip
 
 RUN yum install -y git
 RUN pip install tensorflow-gpu;
+
+RUN cd /home; \
+    git clone https://github.com/tensorflow/tensorflow.git; \
+    git clone https://github.com/tensorflow/models.git;
+
