@@ -16,9 +16,15 @@ RUN yum clean expire-cache; \
     yum install -y cuda
 
 COPY cuda/include/cudnn.h /usr/local/cuda/include/cudnn.h
-COPY cuda/lib64/libcudnn.so /usr/local/cuda/lib64/libcudnn.so
-COPY cuda/lib64/libcudnn.so.7.0.3 /usr/local/cuda/lib64/libcudnn.so.7.0.3
-COPY cuda/lib64/libcudnn_static.a /usr/local/cuda/lib64/libcudnn_static.a
+
+COPY cuDNN-v7.0/include/cudnn.h /usr/local/cuda/include/cudnn.h 
+COPY cuDNN-v7.0/lib64/libcudnn.so /usr/local/cuda/lib64/libcudnn.so 
+COPY cuDNN-v7.0/lib64/libcudnn.so.7.0.3 /usr/local/cuda/lib64/libcudnn.so.7.0.3 
+COPY cuDNN-v7.0/lib64/libcudnn_static.a /usr/local/cuda/lib64/libcudnn_static.a 
+
+COPY cuDNN-v6.0/lib64/libcudnn.so.6 /usr/local/cuda/lib64/libcudnn.so.6
+COPY cuDNN-v6.0/lib64/libcudnn.so.6.0.21 /usr/local/cuda/lib64/libcudnn.so.6.0.21
+
 
 RUN chmod a+r /usr/local/cuda/include/* /usr/local/cuda/lib64/*
 
