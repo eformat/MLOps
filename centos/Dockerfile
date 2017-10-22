@@ -49,3 +49,6 @@ RUN cp /usr/local/cuda/lib64/libcusolver.so /usr/local/cuda/lib64/libcusolver.so
 #    git clone https://github.com/tensorflow/tensorflow.git; \
 #    git clone https://github.com/tensorflow/models.git;
 
+EXPOSE 8080
+
+
