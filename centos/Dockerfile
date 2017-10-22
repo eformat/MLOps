@@ -39,7 +39,13 @@ RUN yum install -y python-pip python-devel; pip install --upgrade pip
 RUN yum install -y git
 RUN pip install tensorflow-gpu;
 
-RUN cd /home; \
-    git clone https://github.com/tensorflow/tensorflow.git; \
-    git clone https://github.com/tensorflow/models.git;
+RUN cp /usr/local/cuda/lib64/libcusolver.so /usr/local/cuda/lib64/libcusolver.so.8.0; \
+    cp /usr/local/cuda/lib64/libcublas.so /usr/local/cuda/lib64/libcublas.so.8.0; \
+    cp /usr/local/cuda/lib64/libcufft.so /usr/local/cuda/lib64/libcufft.so.8.0; \
+    cp /usr/local/cuda/lib64/libcurand.so /usr/local/cuda/lib64/libcurand.so.8.0; \
+    cp /usr/local/cuda/lib64/libcudart.so /usr/local/cuda/lib64/libcudart.so.8.0
+
+#RUN cd /home; \
+#    git clone https://github.com/tensorflow/tensorflow.git; \
+#    git clone https://github.com/tensorflow/models.git;
 
