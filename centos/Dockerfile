@@ -15,10 +15,10 @@ RUN yum install -y kernel-devel dkms
 RUN yum clean expire-cache; \
     yum install -y cuda
 
-COPY cuda/include/cudnn.h /usr/local/cuda/include/cudnn.h;
-COPY cuda/lib64/libcudnn.so /usr/local/cuda/lib64/lincudnn.so;
-COPY cuda/lib64/libcudnn.so.7.0.3 /usr/local/cuda/lib64/libcudnn.so.7.0.3;
-COPY cuda/lib64/libcudnn_static.a /usr/local/cuda/lib64/libcudnn_static.a;
+COPY cuda/include/cudnn.h /usr/local/cuda/include/cudnn.h
+COPY cuda/lib64/libcudnn.so /usr/local/cuda/lib64/libcudnn.so
+COPY cuda/lib64/libcudnn.so.7.0.3 /usr/local/cuda/lib64/libcudnn.so.7.0.3
+COPY cuda/lib64/libcudnn_static.a /usr/local/cuda/lib64/libcudnn_static.a
 
 RUN chmod a+r /usr/local/cuda/include/* /usr/local/cuda/lib64/*
 
