@@ -3,7 +3,7 @@ sudo minikube stop
 sudo minikube start \
   --vm-driver=none \
   --feature-gates=Accelerators=true \
-  --extra-config=apiserver.Admission.PluginNames="Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,GenericAdmissionWebhook,ResourceQuota"
+#  --extra-config=apiserver.Admission.PluginNames="Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,GenericAdmissionWebhook,ResourceQuota"
 
 sudo mv /root/.kube $HOME/.kube # this will write over any previous configuration
 sudo chown -R $USER $HOME/.kube

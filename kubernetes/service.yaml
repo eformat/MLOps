@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tensorflow
+  labels:
+    app: tensorflow
+spec:
+  selector:
+    app: tensorflow
+  ports:
+  - port: 8888
+    name: http
+    protocol: TCP
+  type: NodePort
+---
