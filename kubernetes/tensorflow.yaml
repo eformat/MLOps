@@ -11,25 +11,26 @@ spec:
         app: tf-jupyter
     spec:
       volumes:
-      - hostPath:
-          path: /usr/lib/nvidia-384/bin
-        name: bin
-      - hostPath:
-          path: /usr/lib/nvidia-384
-        name: lib
+      - name: lib
+        hostPath:
+          path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90
       containers:
       - name: tensorflow
-        image: tensorflow/tensorflow:0.11.0rc0-gpu
+        securityContext:
+          privileged: true
+        image: gcr.io/tensorflow/tensorflow:latest-gpu
+#        image: tensorflow/tensorflow:0.11.0rc0-gpu
         ports:
         - containerPort: 8888
         resources:
+          requests:
+            alpha.kubernetes.io/nvidia-gpu: 1        
           limits:
             alpha.kubernetes.io/nvidia-gpu: 1
         volumeMounts:
-        - mountPath: /usr/local/nvidia/bin
-          name: bin
-        - mountPath: /usr/local/nvidia/lib
+        - mountPath: /usr/local/nvidia
           name: lib
+          readOnly: true
 ---
 apiVersion: v1
 kind: Service
@@ -43,7 +44,7 @@ spec:
   ports:
   - port: 8888
     protocol: TCP
-    nodePort: 30061
+    nodePort: 30888
   type: LoadBalancer
 ---
 
