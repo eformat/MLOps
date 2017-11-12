@@ -2,48 +2,54 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: tf-jupyter
+  name: tf-rstudio
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: tf-jupyter
+        app: tf-rstudio
     spec:
       volumes:
       - name: lib
         hostPath:
           path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90
+      - name: rstudio
+        hostPath:
+          path: /home/spicozzi/MLOps/rstudio
       containers:
-      - name: tf-jupyter
+      - name: tf-rstudio
         securityContext:
           privileged: true
-        image: gcr.io/tensorflow/tensorflow:latest-gpu
+        image: stefanopicozzi/tf-rstudio:latest
         ports:
-        - containerPort: 8888
+        - containerPort: 8787
         resources:
           requests:
             alpha.kubernetes.io/nvidia-gpu: 1        
           limits:
             alpha.kubernetes.io/nvidia-gpu: 1
+        imagePullPolicy	:	Never
         volumeMounts:
         - mountPath: /usr/local/nvidia
           name: lib
           readOnly: true
+        - mountPath: /home/rstudio
+          name: rstudio
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: tf-jupyter-service
+  name: tf-rstudio-service
   labels:
-    app: tf-jupyter
+    app: tf-rstudio
 spec:
   selector:
-    app: tf-jupyter
+    app: tf-rstudio
   ports:
-  - port: 8888
+  - port: 8787
     protocol: TCP
-    nodePort: 30888
+    nodePort: 30787
   type: LoadBalancer
 ---
 
