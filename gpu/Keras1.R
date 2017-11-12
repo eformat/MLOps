@@ -2,8 +2,8 @@
 # https://keras.rstudio.com/
 
 library(keras)
- install_keras(tensorflow = "gpu")
- 
+install_keras(tensorflow = "gpu")
+
 mnist <- dataset_mnist()
 x_train <- mnist$train$x
 y_train <- mnist$train$y
