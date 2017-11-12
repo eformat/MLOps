@@ -30,8 +30,8 @@ RUN useradd rstudio \
 	&& addgroup rstudio staff 
 
 # Needed for R GPU tools
-# RUN sudo cp /usr/local/cuda-8.0/lib64/libOpenCL.so /usr/lib
 RUN apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev python-virtualenv
+# RUN cp /usr/local/cuda/lib64/*Open* /usr/lib/R/lib
 
 # Launch rstudio-server
 USER root

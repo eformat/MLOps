@@ -3,6 +3,7 @@
 
 #loading keras library
 library(keras)
+install_keras(tensorflow = "gpu")
 
 #loading the keras inbuilt cifar10 dataset
 ?dataset_cifar10 #to see the help file for details of dataset
