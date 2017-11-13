@@ -1,6 +1,7 @@
 # Adapted from
 # https://medium.com/towards-data-science/how-to-implement-deep-learning-in-r-using-keras-and-tensorflow-82d135ae4889
 
+options(encoding = "UTF-8")
 #loading keras library
 library(keras)
 install_keras(tensorflow = "gpu")

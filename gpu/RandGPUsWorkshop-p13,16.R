@@ -1,6 +1,8 @@
 # library(pryr) 
 # if we wanted to look at addresses
 
+options(encoding = "UTF-8")
+
 nr <- 5000  
 
 #lets be square

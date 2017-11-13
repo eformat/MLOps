@@ -1,6 +1,7 @@
 # Ripped from
 # http://angrystatistician.blogspot.com.au/2015/02/short-notes-get-cuda-and-gputools.html
 
+options(encoding = "UTF-8")
 library(gputools)
 
 set.seed(5446)

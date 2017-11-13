@@ -1,6 +1,7 @@
 # Ripped from
 # https://goatoftheplague.com/2016/12/08/installing-r-package-gputools-and-cuda-8-0-on-ubuntu-16-04/
 
+options(encoding = "UTF-8")
 library(gputools)
 
 magnitude <- 10

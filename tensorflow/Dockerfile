@@ -30,8 +30,11 @@ RUN useradd rstudio \
 	&& addgroup rstudio staff 
 
 # Needed for R GPU tools
-RUN apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev python-virtualenv
+RUN apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev \
+    python-virtualenv mlocate
 # RUN cp /usr/local/cuda/lib64/*Open* /usr/lib/R/lib
+RUN updatedb
+RUN mkdir /etc/OpenCL; mkdir /etc/OpenCL/vendors; echo "libnvidia-opencl.so.1" >> /etc/OpenCL/vendors/nvidia.icd
 
 # Launch rstudio-server
 USER root

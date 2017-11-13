@@ -1,6 +1,7 @@
 # Ripped from
 # https://keras.rstudio.com/
 
+options(encoding = "UTF-8")
 library(keras)
 install_keras(tensorflow = "gpu")
 
