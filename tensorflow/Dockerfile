@@ -31,7 +31,7 @@ RUN useradd rstudio \
 
 # Needed for R GPU tools
 RUN apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev vim \
-    python-virtualenv mlocate git sudo libedit2 libapparmor1 psmisc python-setuptools
+    python-virtualenv mlocate git sudo libedit2 libapparmor1 psmisc python-setuptools iputils-ping
 RUN updatedb
 RUN mkdir /etc/OpenCL; mkdir /etc/OpenCL/vendors; echo "libnvidia-opencl.so.1" >> /etc/OpenCL/vendors/nvidia.icd
 
