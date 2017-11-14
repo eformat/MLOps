@@ -31,8 +31,11 @@ RUN useradd rstudio \
 
 # Needed for R GPU tools
 RUN apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev vim \
-    python-virtualenv mlocate git sudo libedit2 libapparmor1 psmisc python-setuptools iputils-ping
+    python-virtualenv mlocate git sudo libedit2 libapparmor1 psmisc python-setuptools iputils-ping \
+    r-cran-ggplot2
 RUN updatedb
+
+# Not sure this is needed
 RUN mkdir /etc/OpenCL; mkdir /etc/OpenCL/vendors; echo "libnvidia-opencl.so.1" >> /etc/OpenCL/vendors/nvidia.icd
 
 # Set up S6 init system
@@ -45,8 +48,6 @@ RUN wget -P /tmp/ https://github.com/just-containers/s6-overlay/releases/downloa
     && echo '#!/bin/bash \
     \n rstudio-server stop' \
     > /etc/services.d/rstudio/finish
-
-RUN cp /usr/local/cuda-8.0/targets/x86_64-linux/lib/libOpen* /usr/lib/R/lib
 
 RUN echo "export CUDNN_VERSION=6.0.21 \
         \nexport NVIDIA_VISIBLE_DEVICES=all \
@@ -67,7 +68,8 @@ RUN echo 'options(encoding = "UTF-8") \
         \nSys.setenv(CUDA_VERSION="8.0.61") \
         \nSys.setenv(NVIDIA_CUDA_VERSION="8.0.61")' >> /home/rstudio/.Rprofile
 
-RUN apt-get install -y r-cran-ggplot2
+# Make CUDA libraries visible to RStudio Console
+RUN echo "rsession-ld-library-path=/usr/local/cuda/extras/CUPTI/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/usr/local/cuda/lib64/stubs:/usr/lib/R/lib:/usr/lib64/:/usr/local/lib/:${LD_LIBRARY_PATH}" >> /etc/rstudio/rserver.conf
 
 # Launch rstudio-server
 USER root
