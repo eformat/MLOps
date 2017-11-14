@@ -30,13 +30,46 @@ RUN useradd rstudio \
 	&& addgroup rstudio staff 
 
 # Needed for R GPU tools
-RUN apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev \
-    python-virtualenv mlocate
-# RUN cp /usr/local/cuda/lib64/*Open* /usr/lib/R/lib
+RUN apt-get install -y libcurl4-openssl-dev libssl-dev libssh2-1-dev vim \
+    python-virtualenv mlocate git sudo libedit2 libapparmor1 psmisc python-setuptools
 RUN updatedb
 RUN mkdir /etc/OpenCL; mkdir /etc/OpenCL/vendors; echo "libnvidia-opencl.so.1" >> /etc/OpenCL/vendors/nvidia.icd
+
+# Set up S6 init system
+RUN wget -P /tmp/ https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz \
+    && tar xzf /tmp/s6-overlay-amd64.tar.gz -C / \
+    && mkdir -p /etc/services.d/rstudio \
+    && echo '#!/bin/bash \
+    \n exec /usr/lib/rstudio-server/bin/rserver --server-daemonize 0' \
+    > /etc/services.d/rstudio/run \
+    && echo '#!/bin/bash \
+    \n rstudio-server stop' \
+    > /etc/services.d/rstudio/finish
+
+RUN cp /usr/local/cuda-8.0/targets/x86_64-linux/lib/libOpen* /usr/lib/R/lib
+
+RUN echo "export CUDNN_VERSION=6.0.21 \
+        \nexport NVIDIA_VISIBLE_DEVICES=all \
+        \nexport LD_LIBRARY_PATH=/usr/local/cuda/extras/CUPTI/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/usr/local/cuda/lib64/stubs:/usr/lib/R/lib:$LD_LIBRARY_PATH \
+        \nexport NVIDIA_DRIVER_CAPABILITIES=compute,utility \
+        \nexport PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH \
+        \nexport CUDA_PKG_VERSION=8-0=8.0.61-1 \
+        \nexport CUDA_VERSION=8.0.61 \
+        \nexport NVIDIA_CUDA_VERSION=8.0.61 " >> /home/rstudio/.profile
+
+RUN echo 'options(encoding = "UTF-8") \
+        \nSys.setenv(CUDNN_VERSION="6.0.21") \
+        \nSys.setenv(NVIDIA_VISIBLE_DEVICES="all") \
+        \nSys.setenv(LD_LIBRARY_PATH="/usr/local/cuda/extras/CUPTI/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/usr/local/cuda/lib64/stubs:/usr/lib/R/lib") \
+        \nSys.setenv(NVIDIA_DRIVER_CAPABILITIES="compute,utility") \
+        \nSys.setenv(PATH="/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin") \
+        \nSys.setenv(CUDA_PKG_VERSION="8-0=8.0.61-1") \
+        \nSys.setenv(CUDA_VERSION="8.0.61") \
+        \nSys.setenv(NVIDIA_CUDA_VERSION="8.0.61")' >> /home/rstudio/.Rprofile
+
+RUN apt-get install -y r-cran-ggplot2
 
 # Launch rstudio-server
 USER root
 EXPOSE 8787
-CMD /usr/lib/rstudio-server/bin/rserver --server-daemonize 0
+CMD ["/init"]

@@ -4,7 +4,8 @@
 options(encoding = "UTF-8")
 library("gpuR")
 detectGPUs()
-str(gpuInfo(platform_idx = 1L, device_idx = 1L))
+str(gpuInfo(device_idx = 1L))
+# str(gpuInfo(platform_idx = 1L, device_idx = 1L))
 # str(gpuInfo(platform_idx = 2L, device_idx = 1L))
 
 result <- data.frame()
