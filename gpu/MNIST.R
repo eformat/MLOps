@@ -46,6 +46,7 @@ system.time (
 
 plot(history)
 
+dir.create(file.path("~/", "Models"), showWarnings = FALSE)
 save_model_hdf5(model, "~/Models/MNIST", overwrite = TRUE, include_optimizer = TRUE)
 model <- load_model_hdf5("~/Models/MNIST", custom_objects = NULL, compile = TRUE)
 
