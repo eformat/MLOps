@@ -3,7 +3,7 @@
 
 options(encoding = "UTF-8")
 library(keras)
-install_keras(tensorflow = "gpu")
+#install_keras(tensorflow = "gpu")
 
 mnist <- dataset_mnist()
 x_train <- mnist$train$x
