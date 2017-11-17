@@ -46,7 +46,9 @@ system.time (
 
 plot(history)
 
-model %>% evaluate(x_test, y_test)
+save_model_hdf5(model, "~/Models/MNIST", overwrite = TRUE, include_optimizer = TRUE)
+model <- load_model_hdf5("~/Models/MNIST", custom_objects = NULL, compile = TRUE)
 
+model %>% evaluate(x_test, y_test)
 model %>% predict_classes(x_test)
 
