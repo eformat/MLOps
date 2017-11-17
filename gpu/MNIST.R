@@ -36,10 +36,12 @@ model %>% compile(
 )
 
 ## Training and Evaluation
-history <- model %>% fit(
-  x_train, y_train, 
-  epochs = 30, batch_size = 128, 
-  validation_split = 0.2
+system.time (
+  history <- model %>% fit(
+    x_train, y_train, 
+    epochs = 30, batch_size = 128, 
+    validation_split = 0.2
+  )
 )
 
 plot(history)
@@ -47,3 +49,4 @@ plot(history)
 model %>% evaluate(x_test, y_test)
 
 model %>% predict_classes(x_test)
+
