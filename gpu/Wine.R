@@ -20,6 +20,8 @@ wine_df <- rbind(white_df, red_df)
 head(wine_df)
 str(wine_df)
 dim(wine_df)
+
+## Quick exploratory analysis
 M <- cor(wine_df[,1:13])
 corrplot(M, method="circle")
 
@@ -41,28 +43,25 @@ y_test <- test_df[ keeps ]
 X_test <- scale(X_test)
 X_train <- scale(X_train)
 
+## Prepare as Keras inpus
 X_train <- as.matrix(X_train)
 dimnames(X_train) <- NULL
 summary(X_train)
 y_train <- as.matrix(y_train)
-#dimnames(y_train) <- NULL
-#summary(y_train)
 y_trainLabels <- to_categorical(y_train)
-  
+
 X_test <- as.matrix(X_test)
 dimnames(X_test) <- NULL
 summary(X_test)
 y_test <- as.matrix(y_test)
-#dimnames(y_test) <- NULL
-#summary(y_test)
 y_testLabels <- to_categorical(y_test)
 
 ## Defining the Model
 model <- keras_model_sequential() 
 model %>% 
-  layer_dense( units = 24, activation = 'relu', input_shape = c(12) ) %>% 
-  layer_dense( units = 12, activation = 'relu' ) %>%
-  layer_dense( units = 1, activation = 'sigmoid' )
+  layer_dense( units = 12, activation = 'relu', input_shape = c(12) ) %>% 
+  layer_dense( units = 8, activation = 'relu' ) %>%
+  layer_dense( units = 2, activation = 'sigmoid' )
 
 # Print a summary of a model
 summary(model)
@@ -81,7 +80,7 @@ model %>% compile(
 ## Training and evaluation
 system.time(
   history <- model %>% fit(
-    X_train, y_train, 
+    X_train, y_trainLabels, 
     epochs = 20, 
     batch_size = 1,
     validation_split = 0.2,
