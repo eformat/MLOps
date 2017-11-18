@@ -30,6 +30,7 @@ dim(wine_df)
 ## Quick exploratory analysis
 M <- cor(wine_df[,1:13])
 corrplot(M, method="circle")
+hist(wine_df$quality)
 
 ## Split this into training (70%) and test (30%) datasets
 set.seed(101)
