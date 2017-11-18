@@ -110,6 +110,7 @@ classes <- model %>% predict_classes(X_test, batch_size = 128)
 table(y_test, classes)
 
 # Evaluate on test data and labels
-score <- model %>% evaluate(X_test, y_test, batch_size = 128)
+score <- model %>% evaluate(X_test, y_testLabels, batch_size = 128)
 # Print the score
 print(score)
+
