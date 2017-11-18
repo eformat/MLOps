@@ -17,9 +17,10 @@ url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/w
 red_df   <- read.csv(file=url, header=TRUE, sep=";", stringsAsFactors=FALSE)
 red_df$type <- 1
 wine_df <- rbind(white_df, red_df)
-wine_df <- cbind(wine_df, quality.no = 1)
-wine_df$quality.no[wine_df$quality < 6] <- 0
-wine_df$quality.no[wine_df$quality > 6] <-  2
+wine_df$quality.no <- wine_df$quality
+#wine_df <- cbind(wine_df, quality.no = 1)
+#wine_df$quality.no[wine_df$quality < 6] <- 0
+#wine_df$quality.no[wine_df$quality > 6] <-  2
 drops <- c("quality")
 wine_df <- wine_df[ , !(names(wine_df) %in% drops)]
 head(wine_df)
@@ -54,21 +55,21 @@ dimnames(X_train) <- NULL
 summary(X_train)
 y_train <- as.matrix(y_train)
 dimnames(y_train) <- NULL
-y_trainLabels <- to_categorical(y_train, num_classes = 3)
+y_trainLabels <- to_categorical(y_train)
 
 X_test <- as.matrix(X_test)
 dimnames(X_test) <- NULL
 summary(X_test)
 y_test <- as.matrix(y_test)
 dimnames(y_test) <- NULL
-y_testLabels <- to_categorical(y_test, num_classes = 3)
+y_testLabels <- to_categorical(y_test)
 
 ## Defining the Model
 model <- keras_model_sequential() 
 model %>% 
   layer_dense( units = 24, activation = 'relu', input_shape = c(12) ) %>% 
   layer_dense( units = 8, activation = 'relu' ) %>%
-  layer_dense( units = 3, activation = 'sigmoid' )
+  layer_dense( units = 10, activation = 'sigmoid' )
 
 # Print a summary of a model
 summary(model)
