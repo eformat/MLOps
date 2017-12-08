@@ -1,4 +1,5 @@
 FROM gcr.io/tensorflow/tensorflow:latest-gpu
+MAINTAINER Stefano Picozzi<StefanoPicozzi@gmail.com>
 
 # Install R
 # https://cran.rstudio.com/bin/linux/ubuntu/README.html
