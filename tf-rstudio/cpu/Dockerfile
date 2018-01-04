@@ -1,4 +1,4 @@
-FROM gcr.io/tensorflow/tensorflow:latest-cpu
+FROM gcr.io/tensorflow/tensorflow:latest
 MAINTAINER Stefano Picozzi <StefanoPicozzi@gmail.com>
 
 # Install R
