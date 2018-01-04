@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tf-rstudio
+  namespace: mlops
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tf-rstudio
+    spec:
+      volumes:
+      - name: rstudio
+        hostPath:
+          path: /home/stefanopicozzi/MLOps/tf-rstudio
+      containers:
+      - name: tf-rstudio
+        securityContext:
+          privileged: true
+        image: stefanopicozzi/tf-rstudio:latest
+        ports:
+        - containerPort: 8787
+        resources:
+        imagePullPolicy	:	Never
+        volumeMounts:
+        - mountPath: /home/rstudio
+          name: rstudio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-rstudio-service
+  labels:
+    app: tf-rstudio
+spec:
+  selector:
+    app: tf-rstudio
+  ports:
+  - port: 8787
+    protocol: TCP
+    nodePort: 30787
+  type: LoadBalancer
+---
