@@ -18,11 +18,11 @@ spec:
       - name: tf-rstudio
         securityContext:
           privileged: true
-        image: stefanopicozzi/tf-rstudio:latest
+        image: stefanopicozzi/tf-rstudio:latest-cpu
         ports:
         - containerPort: 8787
         resources:
-        imagePullPolicy	:	Never
+        imagePullPolicy	:	IfNotPresent
         volumeMounts:
         - mountPath: /home/rstudio
           name: rstudio
