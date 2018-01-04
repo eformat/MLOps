@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rserver-config
+  namespace: mlops
+data:
+  rserver-conf: |
+    # Server Configuration File
+    rsession-ld-library-path=/usr/local/cuda/extras/CUPTI/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/usr/local/cuda/lib64/stubs:/usr/lib/R/lib
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tf-rstudio
+  namespace: mlops
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tf-rstudio
+    spec:
+      volumes:
+      - name: lib
+        hostPath:
+          path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90
+      - name: rstudio
+        hostPath:
+          path: /home/spicozzi/MLOps/rstudio
+      - name: rserver-config
+        configMap:
+          name: rserver-config
+          items:
+          - key: rserver-conf
+            path: rserver.conf
+      containers:
+      - name: tf-rstudio
+        securityContext:
+          privileged: true
+        image: stefanopicozzi/tf-rstudio:latest-gpu
+        ports:
+        - containerPort: 8787
+        resources:
+          requests:
+            alpha.kubernetes.io/nvidia-gpu: 1        
+          limits:
+            alpha.kubernetes.io/nvidia-gpu: 1
+        imagePullPolicy	:	IfNotPresent
+        volumeMounts:
+        - mountPath: /usr/local/nvidia
+          name: lib
+          readOnly: true
+        - mountPath: /home/rstudio
+          name: rstudio
+        - mountPath: /etc/rstudio
+          name: rserver-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-rstudio-service
+  labels:
+    app: tf-rstudio
+spec:
+  selector:
+    app: tf-rstudio
+  ports:
+  - port: 8787
+    protocol: TCP
+    nodePort: 30787
+  type: LoadBalancer
+---
