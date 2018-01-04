@@ -59,6 +59,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tf-rstudio-service
+  namespace: mlops
   labels:
     app: tf-rstudio
 spec:
