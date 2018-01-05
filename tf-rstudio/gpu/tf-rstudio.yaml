@@ -26,7 +26,7 @@ spec:
           path: /var/lib/nvidia-docker/volumes/nvidia_driver/384.90
       - name: rstudio
         hostPath:
-          path: /home/spicozzi/MLOps/rstudio
+          path: /home/spicozzi/MLOps/tf-rstudio-gpu
       - name: rserver-config
         configMap:
           name: rserver-config

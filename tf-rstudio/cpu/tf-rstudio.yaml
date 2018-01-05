@@ -13,7 +13,7 @@ spec:
       volumes:
       - name: rstudio
         hostPath:
-          path: /home/spicozzi/MLOps/tf-rstudio
+          path: /home/spicozzi/MLOps/tf-rstudio-cpu
       containers:
       - name: tf-rstudio
         securityContext:
