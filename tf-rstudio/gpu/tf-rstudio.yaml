@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: rserver-config
-  namespace: mlops
+  namespace: mlops-gpu
 data:
   rserver-conf: |
     # Server Configuration File
@@ -12,7 +12,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: tf-rstudio
-  namespace: mlops
+  namespace: mlops-gpu
 spec:
   replicas: 1
   template:
@@ -59,7 +59,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tf-rstudio-service
-  namespace: mlops
+  namespace: mlops-gpu
   labels:
     app: tf-rstudio
 spec:
@@ -68,6 +68,6 @@ spec:
   ports:
   - port: 8787
     protocol: TCP
-    nodePort: 30787
+    nodePort: 30887
   type: LoadBalancer
 ---
