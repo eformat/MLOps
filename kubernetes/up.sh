@@ -3,6 +3,8 @@ sudo minikube stop
 sudo minikube start \
   --vm-driver=none \
   --feature-gates=Accelerators=true 
+sudo minikube addons enable kube-dns
+sudo minikube addons list
 
 sudo mv /root/.kube $HOME/.kube # this will write over any previous configuration
 sudo chown -R $USER $HOME/.kube
